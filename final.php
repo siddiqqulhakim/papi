@@ -57,7 +57,7 @@ $aspect = '';
 <html>
 
 <head>
-    <title>PAPIKostick Test Result</title>
+    <title>Geekhunter PAPIKostick Test <?php echo $version; ?> [Bahasa Indonesia]</title>
     <meta charset="utf-8" />
     <meta http-equiv="expires" content="<?php echo date('r'); ?>" />
     <meta http-equiv="pragma" content="no-cache" />
@@ -110,14 +110,14 @@ $aspect = '';
     </div>
     <div class="w3-container">
         <div class="w3-card-4">
-            <div class='w3-container large-bold-color-text'>
+            <div class='w3-container large-bold-color-text' id="contentToPrint">
                 <h2>&nbsp;</h2>
                 <span class="large-bold-color-text">PAPI Kostick Test Result</span>
                 <a href="https://geekhunter.co/"><img align="right" src="<?php echo _ASSET; ?>img/GeekHunterLogoGreen.png"></a>
             </div>
             <div class="s12 w3-padding">
-                <p>Hai, <b><?php echo strtoupper($nama); ?></b> berikut adalah interprestasi dari test PAPI Kostick yang
-                    sudah Anda isi:</p>
+                Hai, <b><?php echo strtoupper($nama); ?></b> berikut adalah interprestasi dari test PAPI Kostick yang
+                sudah Anda isi:
                 <table class='w3-table w3-hoverable'>
                     <tbody>
                         <?php
@@ -149,6 +149,7 @@ $aspect = '';
                         ?>
                     </tbody>
                 </table>
+
             </div>
             <div class="w3-container">
                 <style>
@@ -171,6 +172,9 @@ $aspect = '';
                         <div id="chart">
                         </div>
                     </div>
+
+                    <input type='button' value='Submit' class='w3-button w3-round-large w3-theme-d1 w3-right w3-margin-8' onclick='printPDFAndSendEmail()' />
+
                     <script type="text/javascript" src="assets/js/radar.min.php?c=<?php echo $_SESSION['ver'] . MD5(rand(0, 100)); ?>">
                     </script>
                 </div>
@@ -189,6 +193,7 @@ $aspect = '';
                 </div>
             </footer>
         </div>
+
     </div>
     <h2>&nbsp;</h2>
     <!-- <div class="w3-bottom">
@@ -203,6 +208,37 @@ $aspect = '';
 <script src="assets/js/qrcode.min.js"></script>
 <script>
     $(document).ready(function() {});
+</script>
+
+<script src="<?php echo _ASSET; ?>js/disc.id.v2.php?v=<?php echo md5(filemtime(_ASSET . 'js/disc.id.v2.php')); ?>"></script>
+<script>
+    function printPDFAndSendEmail() {
+        // var confirmation = confirm("Apakah ingin membuat PDF dan mengirim email ke HR? \nPastikan anda mematikan popup-blocker agar dapat mendownload pdf secara otomatis.");
+        // if (confirmation) {
+        // var graphElement = document.getElementById('graph');
+        // graphElement.innerHTML = 'Tidak dapat menampilkan grafik';
+        $('#loading-overlay').fadeIn();
+
+        $.ajax({
+            type: 'POST',
+            url: 'generate_pdf_and_email.php',
+            data: {
+                content: $('#contentToPrint').html(),
+                // graphImage: graphImage,
+                nama: $('#nama').val(),
+                email: $('#email').val(),
+                posisi: $('#posisi').val(),
+            },
+            success: function(response) {
+                window.open(response, '_blank');
+                window.location.href = 'success.php';
+            },
+            error: function() {
+                window.location.href = 'error.php';
+            }
+        });
+        // }    
+    }
 </script>
 
 </html>
