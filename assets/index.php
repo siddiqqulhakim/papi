@@ -1,1 +1,1 @@
-copyright &copy; 2016 - <?php echo date('Y');?> cahyadsn
+copyright &copy; 2016 - <?php echo date('Y'); ?> siddiqqulhakim
