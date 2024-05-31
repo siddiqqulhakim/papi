@@ -9,12 +9,12 @@ header('Expires: ' . date('r'));
 header('Cache-Control: no-store, no-cache, must-revalidate');
 header('Cache-Control: post-check=0, pre-check=0', FALSE);
 header('Pragma: no-cache');
-$sql = "SELECT calc_result,nama,email,created_at,id FROM user_results_v4 WHERE email=? ";
+$sql = "SELECT calc_result,nama,email,created_at,id,posisi FROM user_results_v4 WHERE email=? ";
 $query = $db->prepare($sql);
 $query->bind_param('s', $_SESSION['email']);
 $query->execute();
 $query->store_result();
-$query->bind_result($data, $nama, $email, $created_at, $id);
+$query->bind_result($data, $nama, $email, $created_at, $id, $posisi);
 $query->fetch();
 $tot = 0;
 $values = json_decode($data, true);
@@ -70,7 +70,7 @@ $aspect = '';
     <link rel="shortcut icon" href="<?php echo _ASSET; ?>img/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="<?php echo _ASSET; ?>css/w3/w3.css">
     <link rel="stylesheet" href="<?php echo _ASSET; ?>css/w3/w3-theme-<?php echo $c; ?>.css" media="all" id="papi_css">
-    <?php if (defined('_ISONLINE') && _ISONLINE): ?>
+    <?php if (defined('_ISONLINE') && _ISONLINE) : ?>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
     <?php endif; ?>
     <style>
@@ -95,24 +95,25 @@ $aspect = '';
         <div class="w3-bar w3-theme-d5">
             <span class="w3-bar-item"># PAPI KOSTICK TEST v<?php echo $version; ?></span>
             <a href="#" class="w3-bar-item w3-button">Home</a>
-            <div class="w3-dropdown-hover">
+            <!-- <div class="w3-dropdown-hover">
                 <button class="w3-button">Themes</button>
                 <div class="w3-dropdown-content w3-white w3-card-4" id="theme">
                     <?php
-                    $color = array("black", "brown", "pink", "orange", "amber", "lime", "green", "teal", "purple", "indigo", "blue", "cyan");
-                    foreach ($color as $c) {
-                        echo "<a href='#' class='w3-bar-item w3-button w3-{$c} color' data-value='{$c}'> </a>";
-                    }
+                    // $color = array("black", "brown", "pink", "orange", "amber", "lime", "green", "teal", "purple", "indigo", "blue", "cyan");
+                    // foreach ($color as $c) {
+                    //     echo "<a href='#' class='w3-bar-item w3-button w3-{$c} color' data-value='{$c}'> </a>";
+                    // }
                     ?>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
     <div class="w3-container">
         <div class="w3-card-4">
-            <div class='w3-container w3-theme-l2'>
+            <div class='w3-container large-bold-color-text'>
                 <h2>&nbsp;</h2>
-                <h2>PAPI Kostick Test Result</h1>
+                <span class="large-bold-color-text">PAPI Kostick Test Result</span>
+                <a href="https://geekhunter.co/"><img align="right" src="<?php echo _ASSET; ?>img/GeekHunterLogoGreen.png"></a>
             </div>
             <div class="s12 w3-padding">
                 <p>Hai, <b><?php echo strtoupper($nama); ?></b> berikut adalah interprestasi dari test PAPI Kostick yang
@@ -170,9 +171,8 @@ $aspect = '';
                         <div id="chart">
                         </div>
                     </div>
-                    <script type="text/javascript"
-                        src="assets/js/radar.min.php?c=<?php echo $_SESSION['ver'] . MD5(rand(0, 100)); ?>">
-                        </script>
+                    <script type="text/javascript" src="assets/js/radar.min.php?c=<?php echo $_SESSION['ver'] . MD5(rand(0, 100)); ?>">
+                    </script>
                 </div>
                 <div class="w3-padding">
                     <center>
@@ -202,8 +202,7 @@ $aspect = '';
 <script src="<?php echo _ASSET; ?>js/papi.v4.php?v=<?php echo md5(filemtime(_ASSET . 'js/papi.v4.php')); ?>"></script>
 <script src="assets/js/qrcode.min.js"></script>
 <script>
-    $(document).ready(function () {
-    });
+    $(document).ready(function() {});
 </script>
 
 </html>
