@@ -70,6 +70,7 @@ $aspect = '';
     <link rel="shortcut icon" href="<?php echo _ASSET; ?>img/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="<?php echo _ASSET; ?>css/w3/w3.css">
     <link rel="stylesheet" href="<?php echo _ASSET; ?>css/w3/w3-theme-<?php echo $c; ?>.css" media="all" id="papi_css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
     <?php if (defined('_ISONLINE') && _ISONLINE) : ?>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
     <?php endif; ?>
@@ -91,6 +92,55 @@ $aspect = '';
 </head>
 
 <body>
+
+    <!-- Add this div for the loading spinner -->
+    <div id="loading-overlay">
+        <div id="loading-spinner"></div>
+    </div>
+
+    <style>
+        /* Style for the loading overlay */
+        #loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            /* Set a high z-index to make sure it's above all other elements */
+        }
+
+        /* Style for the loading spinner */
+        #loading-spinner {
+            margin-top: 50%;
+            margin-left: 50%;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid #fff;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 2s linear infinite;
+        }
+
+        /* Animation for the loading spinner */
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+
+    <input type="hidden" id="nama" value="<?= $nama ?>">
+    <input type="hidden" id="email" value="<?= $email ?>">
+    <input type="hidden" id="posisi" value="<?= $posisi ?>">
     <div class="w3-top">
         <div class="w3-bar w3-theme-d5">
             <span class="w3-bar-item"># PAPI KOSTICK TEST v<?php echo $version; ?></span>
@@ -109,8 +159,8 @@ $aspect = '';
         </div>
     </div>
     <div class="w3-container">
-        <div class="w3-card-4">
-            <div class='w3-container large-bold-color-text' id="contentToPrint">
+        <div class="w3-card-4" id="contentToPrint">
+            <div class='w3-container large-bold-color-text'>
                 <h2>&nbsp;</h2>
                 <span class="large-bold-color-text">PAPI Kostick Test Result</span>
                 <a href="https://geekhunter.co/"><img align="right" src="<?php echo _ASSET; ?>img/GeekHunterLogoGreen.png"></a>
@@ -173,10 +223,12 @@ $aspect = '';
                         </div>
                     </div>
 
-                    <input type='button' value='Submit' class='w3-button w3-round-large w3-theme-d1 w3-right w3-margin-8' onclick='printPDFAndSendEmail()' />
-
                     <script type="text/javascript" src="assets/js/radar.min.php?c=<?php echo $_SESSION['ver'] . MD5(rand(0, 100)); ?>">
                     </script>
+
+                    <input type='button' value='Submit' class='w3-button w3-round-large w3-theme-d1 w3-right w3-margin-8' onclick='printPDFAndSendEmail()' />
+
+
                 </div>
                 <div class="w3-padding">
                     <center>
@@ -209,8 +261,6 @@ $aspect = '';
 <script>
     $(document).ready(function() {});
 </script>
-
-<script src="<?php echo _ASSET; ?>js/disc.id.v2.php?v=<?php echo md5(filemtime(_ASSET . 'js/disc.id.v2.php')); ?>"></script>
 <script>
     function printPDFAndSendEmail() {
         // var confirmation = confirm("Apakah ingin membuat PDF dan mengirim email ke HR? \nPastikan anda mematikan popup-blocker agar dapat mendownload pdf secara otomatis.");
@@ -218,6 +268,10 @@ $aspect = '';
         // var graphElement = document.getElementById('graph');
         // graphElement.innerHTML = 'Tidak dapat menampilkan grafik';
         $('#loading-overlay').fadeIn();
+
+        //debug
+        // console.log($('#contentToPrint').html());
+        // console.log($('#nama').val());
 
         $.ajax({
             type: 'POST',
@@ -230,11 +284,13 @@ $aspect = '';
                 posisi: $('#posisi').val(),
             },
             success: function(response) {
-                window.open(response, '_blank');
-                window.location.href = 'success.php';
+                console.log(response);
+                // window.open(response, '_blank');
+                // window.location.href = 'success.php';
             },
             error: function() {
-                window.location.href = 'error.php';
+                console.log(response);
+                // window.location.href = 'error.php';
             }
         });
         // }    

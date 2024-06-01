@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['content'])) {
                 <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
                 <link rel="shortcut icon" href="' . _ASSET . 'img/favicon.ico" type="image/x-icon">
                 <link rel="stylesheet" href="' . _ASSET . 'css/w3.css">
-                <link rel="stylesheet" href="' . _ASSET . 'css/w3-theme-indigo.css" media="all" id="disc_css">
+                <link rel="stylesheet" href="' . _ASSET . 'css/w3-theme-indigo.css" media="all" id="papi_css">
                 <script src="' . _ASSET . 'js/jquery.min.js"></script>
                 <script src="' . _ASSET . 'js/jspdf.min.js"></script>
                 <script src="' . _ASSET . 'js/jspdf.plugin.align.js"></script>
@@ -81,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['content'])) {
         $pdfContent = $dompdf->output();
         
         // Generate a unique file name using uniqid() and timestamp
-        $fileName = $folderpdf . '/' . $nama . '_disc_' . date('dmY') . '.pdf';
+        $fileName = $folderpdf . '/' . $nama . '_papi_' . date('dmY') . '.pdf';
         
         // Save the PDF content to a file
         file_put_contents($fileName, $pdfContent);
@@ -110,7 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['content'])) {
             . "<b>Name:</b> {$nama}<br>"
             . "<b>Email:</b> {$email}<br>"
             . "<b>Applied position:</b> {$posisi}";
-        $mail->send();
+        // $mail->send();
 
         // Send the PDF file to the user for download
         // header('Content-Type: application/pdf');
