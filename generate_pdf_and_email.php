@@ -36,6 +36,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['content'])) {
         $cssContent = ob_get_contents();
         ob_end_clean();
 
+        var_dump($cssContent);
+        die;
+
         $imagePath = _ASSET . 'img/GeekHunterLogoGreen.png';
         $imageData = base64_encode(file_get_contents($imagePath));
         $base64Image = 'data:image/png;base64,' . $imageData;
@@ -55,9 +58,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['content'])) {
                 <link rel="stylesheet" href="' . _ASSET . 'css/w3.css">
                 <link rel="stylesheet" href="' . _ASSET . 'css/w3-theme-indigo.css" media="all" id="papi_css">
                 <script src="' . _ASSET . 'js/jquery.min.js"></script>
-                <script src="' . _ASSET . 'js/jspdf.min.js"></script>
-                <script src="' . _ASSET . 'js/jspdf.plugin.align.js"></script>
-                <script src="' . _ASSET . 'js/jspdf.plugin.autotable.js"></script>
+
+                <script src="' . _ASSET . 'js/jquery.min.php"></script>
                 <style>body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}' . $cssContent . '</style>
             </head>
             <body>
@@ -70,6 +72,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['content'])) {
             '<img src="' . $base64Image . '" align="right">',
             $htmlContent
         );
+
+        var_dump($htmlContent);
+        die;
 
         // Create a new PDF document using Dompdf
         $dompdf = new Dompdf();

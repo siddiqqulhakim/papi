@@ -70,7 +70,7 @@ $aspect = '';
     <link rel="shortcut icon" href="<?php echo _ASSET; ?>img/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="<?php echo _ASSET; ?>css/w3/w3.css">
     <link rel="stylesheet" href="<?php echo _ASSET; ?>css/w3/w3-theme-<?php echo $c; ?>.css" media="all" id="papi_css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+    <script src="<?php echo _ASSET; ?>js/jquery.min.js"></script>
     <?php if (defined('_ISONLINE') && _ISONLINE) : ?>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
     <?php endif; ?>
@@ -116,7 +116,7 @@ $aspect = '';
 
         /* Style for the loading spinner */
         #loading-spinner {
-            margin-top: 50%;
+            margin-top: 30%;
             margin-left: 50%;
             border: 4px solid rgba(255, 255, 255, 0.3);
             border-top: 4px solid #fff;
@@ -225,10 +225,6 @@ $aspect = '';
 
                     <script type="text/javascript" src="assets/js/radar.min.php?c=<?php echo $_SESSION['ver'] . MD5(rand(0, 100)); ?>">
                     </script>
-
-                    <input type='button' value='Submit' class='w3-button w3-round-large w3-theme-d1 w3-right w3-margin-8' onclick='printPDFAndSendEmail()' />
-
-
                 </div>
                 <div class="w3-padding">
                     <center>
@@ -237,15 +233,9 @@ $aspect = '';
                     <h3>&nbsp;</h3>
                 </div>
             </div>
-            <footer class="w3-container w3-theme-l1" id='nav'>
-                <div class="w3-row">
-                    <div class="w3-col s12 w3-padding w3-center">
-                        <?php echo "data created on : {$created_at}"; ?>
-                    </div>
-                </div>
-            </footer>
         </div>
 
+        <input type='button' value='Submit' class='w3-button w3-round-large w3-theme-d1 w3-right w3-margin-8' style="margin: 20px;" onclick='printPDFAndSendEmail()' />
     </div>
     <h2>&nbsp;</h2>
     <!-- <div class="w3-bottom">
