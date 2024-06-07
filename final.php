@@ -71,7 +71,7 @@ $aspect = '';
     <link rel="stylesheet" href="<?php echo _ASSET; ?>css/w3/w3.css">
     <link rel="stylesheet" href="<?php echo _ASSET; ?>css/w3/w3-theme-<?php echo $c; ?>.css" media="all" id="papi_css">
     <script src="<?php echo _ASSET; ?>js/jquery.min.js"></script>
-    <?php if (defined('_ISONLINE') && _ISONLINE) : ?>
+    <?php if (defined('_ISONLINE') && _ISONLINE): ?>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
     <?php endif; ?>
     <style>
@@ -163,7 +163,8 @@ $aspect = '';
             <div class='w3-container large-bold-color-text'>
                 <h2>&nbsp;</h2>
                 <span class="large-bold-color-text">PAPI Kostick Test Result</span>
-                <a href="https://geekhunter.co/"><img align="right" src="<?php echo _ASSET; ?>img/GeekHunterLogoGreen.png"></a>
+                <a href="https://geekhunter.co/"><img align="right"
+                        src="<?php echo _ASSET; ?>img/GeekHunterLogoGreen.png"></a>
             </div>
             <div class="s12 w3-padding">
                 Hai, <b><?php echo strtoupper($nama); ?></b> berikut adalah interprestasi dari test PAPI Kostick yang
@@ -218,13 +219,14 @@ $aspect = '';
                     }
                 </style>
                 <div class="w3-padding">
-                    <div id="body">
+                    <div id="body" style="text-align: center;">
                         <div id="chart">
                         </div>
                     </div>
 
-                    <script type="text/javascript" src="assets/js/radar.min.php?c=<?php echo $_SESSION['ver'] . MD5(rand(0, 100)); ?>">
-                    </script>
+                    <script type="text/javascript"
+                        src="assets/js/radar.min.php?c=<?php echo $_SESSION['ver'] . MD5(rand(0, 100)); ?>">
+                        </script>
                 </div>
                 <div class="w3-padding">
                     <center>
@@ -235,7 +237,8 @@ $aspect = '';
             </div>
         </div>
 
-        <input type='button' value='Submit' class='w3-button w3-round-large w3-theme-d1 w3-right w3-margin-8' style="margin: 20px;" onclick='printPDFAndSendEmail()' />
+        <input type='button' value='Submit' class='w3-button w3-round-large w3-theme-d1 w3-right w3-margin-8'
+            style="margin: 20px;" onclick='printPDFAndSendEmail()' />
     </div>
     <h2>&nbsp;</h2>
     <!-- <div class="w3-bottom">
@@ -248,8 +251,23 @@ $aspect = '';
 </body>
 <script src="<?php echo _ASSET; ?>js/papi.v4.php?v=<?php echo md5(filemtime(_ASSET . 'js/papi.v4.php')); ?>"></script>
 <script src="assets/js/qrcode.min.js"></script>
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 <script>
-    $(document).ready(function() {});
+    $(document).ready(function () {
+        var graphContainer = document.getElementById('chart');
+        html2canvas(graphContainer).then(function (canvas) {
+            var graphImage = canvas.toDataURL("image/png"); // Convert canvas to base64 image
+
+            // Create an image element for the overlay
+            var overlayImage = document.createElement("img");
+            overlayImage.src = graphImage;
+            overlayImage.style.width = "100%";
+            overlayImage.style.height = "100%";
+
+            graphContainer.innerHTML = '';
+            graphContainer.appendChild(overlayImage);
+        });
+    });
 </script>
 <script>
     function printPDFAndSendEmail() {
@@ -273,14 +291,14 @@ $aspect = '';
                 email: $('#email').val(),
                 posisi: $('#posisi').val(),
             },
-            success: function(response) {
+            success: function (response) {
                 console.log(response);
-                // window.open(response, '_blank');
-                // window.location.href = 'success.php';
+                window.open(response, '_blank');
+                window.location.href = 'success.php';
             },
-            error: function() {
+            error: function () {
                 console.log(response);
-                // window.location.href = 'error.php';
+                window.location.href = 'error.php';
             }
         });
         // }    
