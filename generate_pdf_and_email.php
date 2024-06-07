@@ -31,13 +31,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['content'])) {
         }
         
         ob_start();
-        include _ASSET . 'css/w3.css';
-        include _ASSET . 'css/w3-theme-indigo.css'; 
+        include _ASSET . 'css/w3/w3.css';
+        include _ASSET . 'css/w3/w3-theme-indigo.css'; 
         $cssContent = ob_get_contents();
         ob_end_clean();
-
-        var_dump($cssContent);
-        die;
 
         $imagePath = _ASSET . 'img/GeekHunterLogoGreen.png';
         $imageData = base64_encode(file_get_contents($imagePath));
@@ -68,13 +65,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['content'])) {
             </html>';
         
         $htmlContent = str_replace(
-            '<img src="assets/img/GeekHunterLogoGreen.png" align="right">',
-            '<img src="' . $base64Image . '" align="right">',
+            'src="assets/img/GeekHunterLogoGreen.png"',
+            'src="' . $base64Image . '"',
             $htmlContent
         );
-
-        var_dump($htmlContent);
-        die;
 
         // Create a new PDF document using Dompdf
         $dompdf = new Dompdf();
@@ -115,7 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['content'])) {
             . "<b>Name:</b> {$nama}<br>"
             . "<b>Email:</b> {$email}<br>"
             . "<b>Applied position:</b> {$posisi}";
-        // $mail->send();
+        $mail->send();
 
         // Send the PDF file to the user for download
         // header('Content-Type: application/pdf');

@@ -241,7 +241,7 @@ $aspect = '';
     <!-- <div class="w3-bottom">
         <div class="w3-bar w3-theme-d4 w3-center">
             Papikostick Test v<?php echo $version; ?> copyright &copy;
-            2017<?php echo (date('Y') > 2017 ? date('-Y') : ''); ?>
+            2017<?php // echo (date('Y') > 2017 ? date('-Y') : ''); ?>
             by <a href='mailto:siddiqqulhakim@gmail.com'>siddiqqulhakim</a><br />
         </div>
     </div> -->
