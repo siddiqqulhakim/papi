@@ -162,45 +162,12 @@ $aspect = '';
         <div class="w3-card-4" id="contentToPrint">
             <div class='w3-container large-bold-color-text'>
                 <h2>&nbsp;</h2>
-                <span class="large-bold-color-text">PAPI Kostick Test Result</span>
+                <span class="large-bold-color-text">Hasil Tes PAPI Kostick</span>
                 <a href="https://geekhunter.co/"><img align="right"
                         src="<?php echo _ASSET; ?>img/GeekHunterLogoGreen.png"></a>
             </div>
-            <div class="s12 w3-padding">
-                Hai, <b><?php echo strtoupper($nama); ?></b> berikut adalah interprestasi dari test PAPI Kostick yang
-                sudah Anda isi:
-                <table class='w3-table w3-hoverable'>
-                    <tbody>
-                        <?php
-                        $radar = array();
-                        $i = 0;
-                        $mybody = "<h3>PAPI Kostick Test Result</h3><p>Hai, <b>" . strtoupper($nama) . "</b> berikut adalah interprestasi dari test PAPI Kostick yang sudah Anda isi:</p><p><table>";
-                        foreach ($values as $k => $v) {
-                            foreach ($lookup[$k] as $val) {
-                                if ($aspect != $val->aspect) {
-                                    $aspect = $val->aspect;
-                                    $aspects = explode('|', $val->aspect);
-                                    echo "<tr class='w3-theme-l1'><td style=\"padding:4px;\"><b>{$aspects[0]}</b> <i>{$aspects[1]}</i></td></tr>";
-                                    $mybody .= "<tr bgcolor='#bbbbbb'><td style=\"padding:4px;\"><b>{$aspects[0]}</b> <i>{$aspects[1]}</i></td></tr>";
-                                }
-                                if ($v >= $val->low_value && $v <= $val->high_value) {
-                                    $roles = explode('|', $val->role);
-                                    $radar[] = array((++$i), $roles[0], $v);
-                                    echo "<tr class='w3-theme-l2'><td style=\"padding:4px;\"><b>{$roles[0]}</b> <i>{$roles[1]}</i></td></tr>
-                  <tr class='w3-theme-l3'><td style=\"padding:4px;\">{$val->description}</td></tr>
-                  <tr class='w3-theme-l4'><td style=\"padding:4px;\">SCORE : {$v} :  {$val->interprestation}</td></tr>";
-                                    $mybody .= "<tr bgcolor='#cccccc'><td style=\"padding:4px;\"><b>{$roles[0]}</b> <i>{$roles[1]}</i></td></tr>
-                  <tr bgcolor='#eeeeee'><td style=\"padding:4px;\">{$val->description}</td></tr>
-                  <tr bgcolor='#ffffff'><td style=\"padding:4px;\">SCORE : {$v} :  {$val->interprestation}</td></tr>";
-                                }
-                            }
-                        }
-                        $mybody .= "</table></p><p>data dibuat pada : <b>{$created_at}</b></p>";
-                        $_SESSION['data'] = $radar;
-                        ?>
-                    </tbody>
-                </table>
-
+            <div class="w3-container">
+                <b>Nama: <?php echo strtoupper($nama); ?></b>
             </div>
             <div class="w3-container">
                 <style>
@@ -228,12 +195,36 @@ $aspect = '';
                         src="assets/js/radar.min.php?c=<?php echo $_SESSION['ver'] . MD5(rand(0, 100)); ?>">
                         </script>
                 </div>
-                <div class="w3-padding">
-                    <center>
-                        <div id="qrcode" class="pull-right"></div>
-                    </center>
-                    <h3>&nbsp;</h3>
-                </div>
+            </div>
+            <div class="s12 w3-padding">
+                <table class='w3-table'>
+                    <tbody>
+                        <?php
+                        $radar = array();
+                        $i = 0;
+                        foreach ($values as $k => $v) {
+                            foreach ($lookup[$k] as $val) {
+                                if ($aspect != $val->aspect) {
+                                    $aspect = $val->aspect;
+                                    $aspects = explode('|', $val->aspect);
+                                    echo "<tr class='w3-theme-l2'><td style=\"padding:4px; font-size:30px   \"><b>{$aspects[0]}</b> <i>{$aspects[1]}</i></td></tr>
+                                        <tr><td style=\"padding:1px;\">&nbsp;<td></tr>";
+                                }
+                                if ($v >= $val->low_value && $v <= $val->high_value) {
+                                    $roles = explode('|', $val->role);
+                                    $radar[] = array((++$i), $roles[0], $v);
+                                    echo "<tr class='w3-theme-l2'><td style=\"padding:4px;\"><b>{$roles[0]}</b> <i>{$roles[1]}</i></td></tr>
+                                    <tr class='w3-theme-l4'><td style=\"padding:4px;\">SCORE : {$v} :  {$val->interprestation}</td></tr>
+                                    <tr class='w3-theme-l3'><td style=\"padding:4px;\">{$val->description}</td></tr>
+                                    <tr><td style=\"padding:1px;\">&nbsp;<td></tr>";
+                                }
+                            }
+                        }
+                        $_SESSION['data'] = $radar;
+                        ?>
+                    </tbody>
+                </table>
+
             </div>
         </div>
 
@@ -250,7 +241,6 @@ $aspect = '';
     </div> -->
 </body>
 <script src="<?php echo _ASSET; ?>js/papi.v4.php?v=<?php echo md5(filemtime(_ASSET . 'js/papi.v4.php')); ?>"></script>
-<script src="assets/js/qrcode.min.js"></script>
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 <script>
     $(document).ready(function () {

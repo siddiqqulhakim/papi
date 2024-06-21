@@ -36,26 +36,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['content'])) {
         $cssContent = ob_get_contents();
         ob_end_clean();
 
-        $imagePath = _ASSET . 'img/GeekHunterLogoGreen.png';
-        $imageData = base64_encode(file_get_contents($imagePath));
-        $base64ImageLogo = 'data:image/png;base64,' . $imageData;
-
         $doc = new DOMDocument();
         libxml_use_internal_errors(true);
         $doc->loadHTML($_POST['content']);
         libxml_clear_errors();
 
         $xpath = new DOMXPath($doc);
-        $chartImage = $xpath->query("//div[@id='chart']//img")->item(0);
-        $imageSrcChart = $chartImage->getAttribute('src');
-        $imageData = base64_encode(file_get_contents($imageSrcChart));
-        $base64ImageChart = 'data:image/png;base64,' . $imageData;
-
-        $xpath = new DOMXPath($doc);
         $chartDiv = $xpath->query("//div[@id='chart']")->item(0);
+        $base64ImageChart = '';
         if ($chartDiv) {
-            $chartDiv->parentNode->removeChild($chartDiv);
+            $chartImg = $xpath->query("//div[@id='chart']/img")->item(0);
+
+            if ($chartImg) {
+                $base64ImageChart = $chartImg->getAttribute('src');
+            }
+
+            // Remove the <div id="chart"> element
+            $parent = $chartDiv->parentNode;
+            $parent->removeChild($chartDiv);
+
+            // Create a new <div> element with the desired content
+            $newDiv = $doc->createElement('div');
+            $newDiv->setAttribute('style', 'text-align: center;');
+
+            // Create a new <img> element with the base64 image
+            $newImg = $doc->createElement('img');
+            $newImg->setAttribute('src', $base64ImageChart);
+            $newImg->setAttribute('alt', 'Chart Image');
+            $newImg->setAttribute('class', 'chart-image');
+
+            // Append the <img> element to the <div>
+            $newDiv->appendChild($newImg);
+            $parent->appendChild($newDiv);
         }
+
         $modifiedContent = $doc->saveHTML();
 
         $nama = $_POST['nama'];
@@ -78,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['content'])) {
                 <style>
                     body, h1, h2, h3, h4, h5 { font-family: "Raleway", sans-serif }
                     ' . $cssContent . '
-                    img.chart-image {
+                    .chart-image {
                         display: block;
                         margin: 0 auto;
                         width: 1000px;
@@ -88,34 +102,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['content'])) {
             </head>
             <body>
                 ' . $modifiedContent . '
-                <div style="page-break-before: always; text-align: center;">
-                    <img src="' . $base64ImageChart . '" alt="Chart Image" class="chart-image" />
-                </div>
             </body>
             </html>';
+
+        $imagePath = _ASSET . 'img/GeekHunterLogoGreen.png';
+        $imageData = base64_encode(file_get_contents($imagePath));
+        $base64ImageLogo = 'data:image/png;base64,' . $imageData;
 
         $htmlContent = str_replace(
             '<img align="right" src="assets/img/GeekHunterLogoGreen.png">',
             '<img align="right" src="' . $base64ImageLogo . '">',
-            $htmlContent
-        );
-
-        $doc = new DOMDocument();
-        $doc->loadHTML($_POST['content']);
-        $xpath = new DOMXPath($doc);
-        $chartImage = $xpath->query("//div[@id='chart']/img")->item(0);
-
-        // Get the image source
-        $imageSrc = $chartImage->getAttribute('src');
-
-        // Load the image and convert to base64
-        $imageData = base64_encode(file_get_contents($imageSrc));
-        $base64Image = 'data:image/png;base64,' . $imageData;
-
-        // Replace the image tag in the HTML content
-        $htmlContent = str_replace(
-            $imageSrc,
-            $base64Image,
             $htmlContent
         );
 
