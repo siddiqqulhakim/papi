@@ -125,10 +125,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['content'])) {
         $pdfContent = $dompdf->output();
 
         // Generate a unique file name using uniqid() and timestamp
-        $fileName = $folderpdf . '/' . $nama . '_papi_' . date('dmY') . '.pdf';
-
-        // Save the PDF content to a file
-        file_put_contents($fileName, $pdfContent);
+        $fileName = $nama . '_papi_' . date('dmY') . '.pdf';
 
         $mail = new PHPMailer(true);
         $mail->isSMTP();
@@ -159,9 +156,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['content'])) {
         // Send the PDF file to the user for download
         header('Content-Type: application/pdf');
         header('Content-Disposition: attachment; filename="' . $fileName . '"');
-        readfile($fileName);
+        echo $pdfContent; // Output the PDF content directly for download
 
-        echo $fileName;
     } catch (Exception $e) {
         echo "Terjadi error. Error: {$e->getMessage()}";
     }
