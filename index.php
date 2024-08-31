@@ -91,20 +91,6 @@ if (!isset($_SESSION['papi_id_data'])) {
 				<div class=" w3-container" id='intro'>
 					<div class='w3-row'>
 						<div class="w3-col s12">
-							<p>PAPI (<i>Personality and Preference Inventory</i>) adalah <i>personality assessment</i>
-								atau alat tes penilaian kepribadian terkemuka yang digunakan oleh para profesional HR
-								(<i>Human Resource</i>) dan manajer terkait untuk mengevaluasi perilaku dan gaya kerja
-								individu pada semua tingkatan. <i>Personality and Preference Inventory</i> (PAPI) dibuat
-								oleh Guru Besar Psikologi Industri dari Massachusetts, Amerika, yang bernama Dr. Max
-								Martin Kostick pada awal tahun 1960-an. Versi Swedia lebih dulu diperkenalkan di awal
-								1980-an dan versi ini diperkenalkan pada tahun 1997 dengan versi <i>ipsatif</i> (PAPI-I)
-								dan <i>normatif</i> (PAPI-N). Versi <i>ipsatif</i>, PAPI-I, dirancang untuk digunakan
-								untuk pengembangan pribadi, sedangkan versi <i>normatif</i>, PAPI-N, yang dimaksudkan
-								untuk digunakan untuk perbandingan dan seleksi. Dasar pemikiran untuk desain dan
-								formulasi PAPI didasarkan pada penelitian dan teori kepribadian “<i>needs-press</i>”
-								oleh Murray (1938)</p>
-						</div>
-						<div class="w3-col s12">
 							<div class="w3-container  w3-padding">
 								<h3>Data Diri</h3>
 								<label>Nama Lengkap <sup>*</sup></label>
@@ -126,7 +112,8 @@ if (!isset($_SESSION['papi_id_data'])) {
 					<div class="w3-row">
 						<div class="w3-col s12">
 							Berikut ini ada 90 nomor isian. Masing-masing nomor memiliki dua pernyataan (Pernyataan 1 &
-							2). Pilihlah salah satu pernyataan yang paling sesuai dengan diri Anda dengan men-check pada
+							2). Pilihlah salah satu pernyataan yang <b>paling sesuai dengan diri Anda</b> dengan
+							men-check pada
 							isian pada kolom yang sudah disediakan (Kolom Pilihan).
 							Anda <b>HARUS</b> memilih salah satu yang dominan serta mengisi semua nomor.
 						</div>
@@ -186,7 +173,7 @@ if (!isset($_SESSION['papi_id_data'])) {
 								id="btn_lanjut">Lanjut</button>
 						</div>
 						<div class="w3-col s10 w3-padding">
-							<input type='submit' value='Kirim' id='btn_kirim'
+							<input type='submit' value='Selesai' id='btn_kirim'
 								class='w3-button w3-round-large w3-theme-d1 w3-right w3-margin-8 w3-disabled'
 								disabled />
 						</div>
