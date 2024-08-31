@@ -159,7 +159,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['content'])) {
         // Send the PDF file to the user for download
         header('Content-Type: application/pdf');
         header('Content-Disposition: attachment; filename="' . $fileName . '"');
-        // readfile($fileName);
+        readfile($fileName);
 
         echo $fileName;
     } catch (Exception $e) {
