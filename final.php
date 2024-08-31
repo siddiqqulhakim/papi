@@ -214,7 +214,7 @@ $aspect = '';
                                     $roles = explode('|', $val->role);
                                     $radar[] = array((++$i), $roles[0], $v);
                                     echo "<tr class='w3-theme-l2'><td style=\"padding:4px;\"><b>{$roles[0]}</b> <i>{$roles[1]}</i></td></tr>
-                                    <tr class='w3-theme-l4'><td style=\"padding:4px;\">SCORE : {$v} :  {$val->interprestation}</td></tr>
+                                    <tr class='w3-theme-l4'><td style=\"padding:4px;\">SCORE : {$v}/10 :  {$val->interprestation}</td></tr>
                                     <tr class='w3-theme-l3'><td style=\"padding:4px;\">{$val->description}</td></tr>
                                     <tr><td style=\"padding:1px;\">&nbsp;<td></tr>";
                                 }
@@ -232,18 +232,36 @@ $aspect = '';
             style="margin: 20px;" onclick='printPDFAndSendEmail()' />
     </div>
     <h2>&nbsp;</h2>
-    <!-- <div class="w3-bottom">
-        <div class="w3-bar w3-theme-d4 w3-center">
-            Papikostick Test v<?php echo $version; ?> copyright &copy;
-            2017<?php // echo (date('Y') > 2017 ? date('-Y') : ''); ?>
-            by <a href='mailto:siddiqqulhakim@gmail.com'>siddiqqulhakim</a><br />
-        </div>
-    </div> -->
 </body>
-<script src="<?php echo _ASSET; ?>js/papi.v4.php?v=<?php echo md5(filemtime(_ASSET . 'js/papi.v4.php')); ?>"></script>
+<script src="<?php echo _ASSET; ?>js/papi.v4.js"></script>
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 <script>
     $(document).ready(function () {
+        document.querySelectorAll('circle').forEach(circle => {
+            // Get the number from the alt attribute
+            const number = circle.getAttribute('alt');
+
+            // Get the position of the circle
+            const cx = circle.getAttribute('cx');
+            const cy = circle.getAttribute('cy');
+
+            // Create a new text element
+            const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+
+            // Set the attributes for the text element
+            text.setAttribute('x', cx);
+            text.setAttribute('y', cy);
+            text.setAttribute('text-anchor', 'middle'); // Center the text
+            text.setAttribute('dominant-baseline', 'middle'); // Vertically align the text in the middle
+            text.setAttribute('fill', 'white'); // Text color
+
+            // Set the text content to the number from the alt attribute
+            text.textContent = number;
+
+            // Insert the text element after the circle element
+            circle.parentNode.insertBefore(text, circle.nextSibling);
+        });
+
         var graphContainer = document.getElementById('chart');
         html2canvas(graphContainer).then(function (canvas) {
             var graphImage = canvas.toDataURL("image/png"); // Convert canvas to base64 image
