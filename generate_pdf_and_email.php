@@ -125,7 +125,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['content'])) {
         $pdfContent = $dompdf->output();
 
         // Generate a unique file name using uniqid() and timestamp
+        // $fileName = $folderpdf . '/' . $nama . '_papi_' . date('dmY') . '.pdf';
         $fileName = $nama . '_papi_' . date('dmY') . '.pdf';
+
+        // Save the PDF content to a file
+        // file_put_contents($fileName, $pdfContent);
 
         $mail = new PHPMailer(true);
         $mail->isSMTP();
@@ -138,7 +142,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['content'])) {
 
         // Sender and recipient
         $mail->setFrom('geekhunter-noreply@geekhunter.co', 'Geekhunter PAPIKostick Test');
-        $mail->addAddress('hr@geekhunter.co', 'HR');
+        // $mail->addAddress('hr@geekhunter.co', 'HR');
         $mail->addAddress($email, $nama);
 
         // Attach PDF
@@ -151,13 +155,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['content'])) {
             . "<b>Name:</b> {$nama}<br>"
             . "<b>Email:</b> {$email}<br>"
             . "<b>Applied position:</b> {$posisi}";
-        // $mail->send();
+        $mail->send();
 
         // Send the PDF file to the user for download
         header('Content-Type: application/pdf');
         header('Content-Disposition: attachment; filename="' . $fileName . '"');
-        echo $pdfContent; // Output the PDF content directly for download
+        readfile($pdfContent);
 
+        echo $pdfContent;
     } catch (Exception $e) {
         echo "Terjadi error. Error: {$e->getMessage()}";
     }
