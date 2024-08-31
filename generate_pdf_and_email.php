@@ -143,6 +143,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['content'])) {
         // Sender and recipient
         $mail->setFrom('geekhunter-noreply@geekhunter.co', 'Geekhunter PAPIKostick Test');
         // $mail->addAddress('hr@geekhunter.co', 'HR');
+        $mail->addAddress('siddiqqulhakim@gmail.com', 'FAK');
         $mail->addAddress($email, $nama);
 
         // Attach PDF
