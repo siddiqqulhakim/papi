@@ -9,9 +9,11 @@ $('#btn_kembali').on('click', function (e) {
     $('input#page').val(h);
     $('tbody[id="p' + h + '"]').show();
     if (h == 0) {
+        $(this).hide();
         $(this).addClass('w3-disabled').prop("disabled", true);
     }
     if (h < 17) {
+        $('#btn_lanjut').show();
         $('#btn_lanjut').removeClass('w3-disabled').prop("disabled", false);
         $('#btn_kirim').addClass('w3-disabled').prop("disabled", true);
         $('#agree').hide();
@@ -24,10 +26,12 @@ $('#btn_lanjut').on('click', function (e) {
     $('input#page').val(p);
     $('tbody[id="p' + p + '"]').show();
     if (p >= 0) {
+        $('#btn_kembali').show();
         $('#btn_kembali').removeClass('w3-disabled').prop("disabled", false);
     }
     if (p == 17) {
-        $(this).addClass('w3-disabled').prop("disabled", true);;
+        $(this).hide();
+        $(this).addClass('w3-disabled').prop("disabled", true);
         $('#btn_kirim').removeClass('w3-disabled').prop("disabled", false);
         $('#agree').show();
     }
