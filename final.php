@@ -158,6 +158,15 @@ $aspect = '';
             </div> -->
         </div>
     </div>
+    <br /> <br />
+    <div class="w3-container">
+        <div class="w3-card-4">
+            <input type='button' value='Submit To Geekhunter'
+                class='w3-button w3-round-large w3-theme-d1 w3-right w3-margin-8' style="margin: 20px;"
+                onclick='printPDFAndSendEmail()' />
+        </div>
+    </div>
+
     <div class="w3-container">
         <div class="w3-card-4" id="contentToPrint">
             <div class='w3-container large-bold-color-text'>
@@ -228,8 +237,9 @@ $aspect = '';
             </div>
         </div>
 
-        <input type='button' value='Submit' class='w3-button w3-round-large w3-theme-d1 w3-right w3-margin-8'
-            style="margin: 20px;" onclick='printPDFAndSendEmail()' />
+        <input type='button' value='Submit To Geekhunter'
+            class='w3-button w3-round-large w3-theme-d1 w3-right w3-margin-8' style="margin: 20px;"
+            onclick='printPDFAndSendEmail()' />
     </div>
     <h2>&nbsp;</h2>
 </body>

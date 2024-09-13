@@ -173,7 +173,7 @@ if (!isset($_SESSION['papi_id_data'])) {
 								id="btn_lanjut">Lanjut</button>
 						</div>
 						<div class="w3-col s10 w3-padding">
-							<input type='submit' value='Selesai' id='btn_kirim'
+							<input type='submit' value='Proses' id='btn_kirim'
 								class='w3-button w3-round-large w3-theme-d1 w3-right w3-margin-8 w3-disabled'
 								disabled />
 						</div>
