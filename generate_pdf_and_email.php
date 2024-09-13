@@ -136,9 +136,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['content'])) {
         $mail->Host = 'smtp.gmail.com';
         $mail->SMTPAuth = true;
         $mail->Username = 'ghsupport@geekhunter.co';
-        $mail->Password = 'fcdmnhxtaclkhycn';
-        $mail->SMTPSecure = 'ssl';
-        $mail->Port = 465;
+        $mail->Password = 'plyn wkey xxjx jqrm';
+        $mail->SMTPSecure = 'tls';
+        $mail->Port = 587;
 
         // Sender and recipient
         $mail->setFrom('geekhunter-noreply@geekhunter.co', 'Geekhunter PAPIKostick Test');
@@ -161,11 +161,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['content'])) {
         // Send the PDF file to the user for download
         header('Content-Type: application/pdf');
         header('Content-Disposition: attachment; filename="' . $fileName . '"');
-        readfile($pdfContent);
+        // readfile($pdfContent);
 
         echo $pdfContent;
     } catch (Exception $e) {
-        echo "Terjadi error. Error: {$e->getMessage()}";
+        $errorMessage = "Error occurred on " . date('Y-m-d H:i:s') . "\n";
+        $errorMessage .= "Error: " . $e->getMessage() . "\n";
+        $errorMessage .= "Mailer Error: " . $mail->ErrorInfo . "\n";
+
+        // Log the error to a file
+        error_log($errorMessage, 3, 'log/error.log');
+
+        // Optionally, you can output the error
+        echo "Terjadi error. Error: {$e->getMessage()} - Mailer Error: {$mail->ErrorInfo}";
     }
 
 } else {
