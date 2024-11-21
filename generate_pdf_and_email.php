@@ -135,8 +135,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['content'])) {
         $mail->isSMTP();
         $mail->Host = 'smtp.gmail.com';
         $mail->SMTPAuth = true;
-        $mail->Username = 'ghsupport@geekhunter.co';
-        $mail->Password = 'plyn wkey xxjx jqrm';
+        $mail->Username = 'recruiteradm@geekhunter.co';
+        $mail->Password = 'lackscsruvgsfqkt';
         $mail->SMTPSecure = 'tls';
         $mail->Port = 587;
 
